@@ -24,6 +24,7 @@ type SanityProject = {
 	orderRank?: string;
 	slug: { current: string };
 	hasSubpage?: boolean;
+	showInterestButton?: boolean;
 	subpage?: { title?: string; textBlocks?: string[] };
 };
 
@@ -49,6 +50,9 @@ async function getOurProjectsPage(): Promise<OurProjectsPageData> {
         }
     `, {}, { next: { revalidate: 0 }});
 
+    // showInterestButton: a hidden Studio field keeps its stored value, so eligibility is
+    // re-checked here. Same rule as the project list on /intresse (app/(main)/intresse/page.tsx)
+    // and the field's hidden() in sanity/schemaTypes/schemas/estateProject.ts.
     const projects = await client.fetch(`
         *[_type == "estateProject"]
 		| order(orderRank asc, _createdAt desc)
@@ -63,6 +67,10 @@ async function getOurProjectsPage(): Promise<OurProjectsPageData> {
 				current
 			},
 			hasSubpage,
+			"showInterestButton": showInterestButton == true && hasSubpage != true && (
+				((status == "ongoing" || status == "planned") && excludeFromInterestForm != true)
+				|| showInInterestForm == true
+			),
 			subpage {
 				title,
 				textBlocks

@@ -14,6 +14,7 @@ type Project = {
 	status: "ongoing" | "done" | "planned";
 	slug: string;
 	hasSubpage?: boolean;
+	showInterestButton?: boolean;
 };
 
 export default function ProjectsList({ projects }: { projects: Project[] }) {

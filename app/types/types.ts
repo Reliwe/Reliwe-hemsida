@@ -21,6 +21,7 @@ export type Project = {
     status: "ongoing" | "done" | "planned";
     slug: string;
     hasSubpage?: boolean;
+    showInterestButton?: boolean;
 };
 
 type FactCard = {

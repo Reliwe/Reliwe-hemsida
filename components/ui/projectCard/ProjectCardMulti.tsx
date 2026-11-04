@@ -6,6 +6,7 @@ import Link from "next/link";
 import ButtonAnimationWrapper from "../buttons/newButtons/ButtonAnimationWrapper";
 import ButtonBackground from "../buttons/newButtons/ButtonBackground";
 import ProjectText from "./ProjectText";
+import { getProjectCta } from "./projectCta";
 
 interface ProjectCardMultiProps {
 	project: ProjectItem;
@@ -14,6 +15,7 @@ interface ProjectCardMultiProps {
 
 export default function ProjectCardMulti({ project, index }: ProjectCardMultiProps) {
 	const clampedIndex = index % colorScheme.length;
+	const cta = getProjectCta(project);
 
 	return (
 		<>
@@ -27,10 +29,10 @@ export default function ProjectCardMulti({ project, index }: ProjectCardMultiPro
 						<h2 className="heading text-center md:text-start">
 							{project.title}
 						</h2>
-						{project.hasSubpage && (
-							<Link href={`/${project.slug}`} className="hidden md:block">
+						{cta && (
+							<Link href={cta.href} className="hidden md:block">
 								<ButtonAnimationWrapper>
-									<ButtonBackground label="Läs mer & anmäl intresse" />
+									<ButtonBackground label={cta.label} />
 								</ButtonAnimationWrapper>
 							</Link>
 						)}
@@ -44,11 +46,11 @@ export default function ProjectCardMulti({ project, index }: ProjectCardMultiPro
 				<div>
 					<ImagesDisplay imgUrls={project.imgUrls} projectName={project.title} clampedIndex={clampedIndex} />
 				</div>
-				{project.hasSubpage && (
+				{cta && (
 					<div className="flex flex-row justify-center">
-						<Link href={`/${project.slug}`} className="md:hidden">
+						<Link href={cta.href} className="md:hidden">
 							<ButtonAnimationWrapper hasMaxWidth={false} >
-								<ButtonBackground label="Läs mer & anmäl intresse" />
+								<ButtonBackground label={cta.label} />
 							</ButtonAnimationWrapper>
 						</Link>
 					</div>

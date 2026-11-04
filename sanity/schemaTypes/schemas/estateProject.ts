@@ -137,6 +137,22 @@ export const estateProject = defineType({
             initialValue: false
         }),
         defineField({
+            name: "showInterestButton",
+            title: "Visa knapp för intresseanmälan",
+            type: "boolean",
+            description: "Visar knappen \"Intresseanmälan\" i projektlistan. Knappen leder till den allmänna intresseanmälan med projektet förvalt. Valet finns bara för projekt utan undersida som visas i intresseanmälan.",
+            initialValue: false,
+            // Same eligibility rule as the project list on /intresse.
+            // Keep in sync with the GROQ in components/sections/ourProjects/OurProjects.tsx.
+            hidden: ({ document }) => {
+                if (document?.hasSubpage) return true;
+                const listedByStatus =
+                    (document?.status === "ongoing" || document?.status === "planned") &&
+                    document?.excludeFromInterestForm !== true;
+                return !(listedByStatus || document?.showInInterestForm === true);
+            },
+        }),
+        defineField({
             name: "slug",
             title: "Slug",
             type: "slug",

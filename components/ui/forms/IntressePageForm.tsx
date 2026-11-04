@@ -95,9 +95,15 @@ function SuccessState() {
 	);
 }
 
-export default function IntressePageForm({ projects }: { projects: Project[] }) {
+export default function IntressePageForm({
+	projects,
+	initialSelectedProjects = [],
+}: {
+	projects: Project[];
+	initialSelectedProjects?: string[];
+}) {
 	const [fields, setFields] = useState<FormFields>({
-		selectedProjects: [],
+		selectedProjects: initialSelectedProjects,
 		firstName: "",
 		lastName: "",
 		email: "",

@@ -6,6 +6,7 @@ import Link from "next/link";
 import ButtonAnimationWrapper from "../buttons/newButtons/ButtonAnimationWrapper";
 import ButtonBackground from "../buttons/newButtons/ButtonBackground";
 import ProjectText from "./ProjectText";
+import { getProjectCta } from "./projectCta";
 
 interface ProjectCardSingleProps {
 	project: ProjectItem;
@@ -14,6 +15,7 @@ interface ProjectCardSingleProps {
 
 export default function ProjectCardSingle({ project, index }: ProjectCardSingleProps) {
 	const clampedIndex = index % colorScheme.length;
+	const cta = getProjectCta(project);
 
 	return (
 		<>
@@ -32,10 +34,10 @@ export default function ProjectCardSingle({ project, index }: ProjectCardSingleP
 						<div className="max-w-prose flex flex-col justify-between items-vertical-gap">
 							<div className="flex flex-col gap-12">
 								<ProjectText text={project.text} />
-								{project.hasSubpage && (
-									<Link href={`/${project.slug}`} className="hidden md:block">
+								{cta && (
+									<Link href={cta.href} className="hidden md:block">
 										<ButtonAnimationWrapper hasMaxWidth={false} >
-											<ButtonBackground label="Läs mer & anmäl intresse" />
+											<ButtonBackground label={cta.label} />
 										</ButtonAnimationWrapper>
 									</Link>
 								)}
@@ -48,11 +50,11 @@ export default function ProjectCardSingle({ project, index }: ProjectCardSingleP
 						</div>
 					</div>
 				</div>
-				{project.hasSubpage && (
+				{cta && (
 						<div className="flex flex-row justify-center md:hidden">
-							<Link href={`/${project.slug}`}>
+							<Link href={cta.href}>
 								<ButtonAnimationWrapper>
-									<ButtonBackground label="Läs mer & anmäl intresse" />
+									<ButtonBackground label={cta.label} />
 								</ButtonAnimationWrapper>
 							</Link>
 						</div>

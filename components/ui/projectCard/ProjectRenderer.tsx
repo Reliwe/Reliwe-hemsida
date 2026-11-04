@@ -16,8 +16,8 @@ export type ProjectItem = {
 	status: "ongoing" | "done" | "planned";
 	imgUrls: string[];
 	hasSubpage?: boolean;
+	showInterestButton?: boolean;
 	slug: string;
-
 }
 
 interface ProjectRendererProps {
