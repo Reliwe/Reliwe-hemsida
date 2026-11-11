@@ -35,7 +35,7 @@ export default function ProjectCardSingle({ project, index }: ProjectCardSingleP
 							<div className="flex flex-col gap-12">
 								<ProjectText text={project.text} />
 								{cta && (
-									<Link href={cta.href} className="hidden md:block">
+									<Link href={cta.href} className="hidden md:block self-start">
 										<ButtonAnimationWrapper hasMaxWidth={false} >
 											<ButtonBackground label={cta.label} />
 										</ButtonAnimationWrapper>
